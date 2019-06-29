@@ -1,0 +1,78 @@
+{
+    "name": "game-of-drones",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@babel/core": "7.1.6",
+        "@svgr/webpack": "2.4.1",
+        "babel-core": "7.0.0-bridge.0",
+        "babel-plugin-named-asset-import": ">=0.3.0",
+        "babel-preset-react-app": ">=7.0.0",
+        "bfj": "6.1.1",
+        "case-sensitive-paths-webpack-plugin": "2.1.2",
+        "chalk": "2.4.1",
+        "connected-react-router": ">=6.2.2",
+        "css-loader": "1.0.0",
+        "dotenv": "6.0.0",
+        "dotenv-expand": "4.2.0",
+        "eslint": "^5.16.0",
+        "express": ">=4.16.4",
+        "file-loader": "2.0.0",
+        "fork-ts-checker-webpack-plugin-alt": "0.4.14",
+        "fs-extra": "7.0.0",
+        "glamor": ">=2.20.40",
+        "html-webpack-plugin": "4.0.0-alpha.2",
+        "identity-obj-proxy": "3.0.0",
+        "immutability-helper": ">=3.0.0",
+        "mini-css-extract-plugin": "0.4.3",
+        "optimize-css-assets-webpack-plugin": "5.0.1",
+        "pnp-webpack-plugin": "1.1.0",
+        "postcss-flexbugs-fixes": "4.1.0",
+        "postcss-loader": "3.0.0",
+        "postcss-preset-env": "6.3.1",
+        "postcss-safe-parser": "4.0.1",
+        "prop-types": ">=15.7.2",
+        "react": ">=16.8.6",
+        "react-app-polyfill": ">=0.2.0",
+        "react-dev-utils": ">=7.0.1",
+        "react-dom": ">=16.8.6",
+        "react-hot-loader": ">=4.6.5",
+        "react-redux": ">=6.0.0",
+        "react-router": ">=4.3.1",
+        "react-router-dom": ">=4.3.1",
+        "react-scripts": "3.0.1",
+        "redux": ">=4.0.1",
+        "redux-persist": ">=5.10.0",
+        "redux-socket.io": ">=1.4.0",
+        "redux-thunk": ">=2.3.0",
+        "reselect": ">=4.0.0",
+        "resolve": "1.8.1",
+        "sass-loader": "7.1.0",
+        "socket.io": ">=2.2.0",
+        "socket.io-client": ">=2.2.0",
+        "style-loader": "0.23.0",
+        "terser-webpack-plugin": "1.1.0",
+        "url-loader": "1.1.1"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
+}
