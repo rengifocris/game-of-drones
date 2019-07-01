@@ -1,5 +1,5 @@
 <h1>GAME OF DRONES</h1>
-<p>This project is created with the aim of showing the knowledge obtained in frontend technologies like react.js, redux.js and backend with nodej.js and socket.io, as a part of the techical test for UruIt  it is a game called Game Of Drones based on the famous game rock, paper or scissors, which includes two game modes "player vs computer" and "player vs player" this game is responsive and multiplayer.</p>
+<p>This project is created with the aim of showing the knowledge obtained in frontend technologies like react.js, redux.js and backend with nodej.js and socket.io, as a part of the techical test for UruIt  it is a game called Game Of Drones based on the famous game rock, paper or scissors, which includes two game modes "player vs machine" and "player vs player" this game is responsive and multiplayer.</p>
 
 <h2>Libraries used</h2>
 <p>These are the libraries that were used.</p>
