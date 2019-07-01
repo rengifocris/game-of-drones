@@ -1,68 +1,52 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#GAME OF DRONES
+This project is created with the aim of showing the knowledge obtained in frontend technologies like react.js, redux.js and backend with nodej.js and socket.io, as a part of the techical test for UruIt  it is a game called Game Of Drones based on the famous game rock, paper or scissors, which includes two game modes "player vs computer" and "player vs player".
+#######################################################
 
-## Available Scripts
+##Libraries used
+These are the libraries that were used.
 
-In the project directory, you can run:
+react                   #JavaScript library to create robust interfaces.
+redux                   #Predictible container of javascript application status.
+react-redux             #React connection with redux.
+react-router            #Router for applications with react.
+connected-react-router  #A Redux link for React Router v4
+reselect Efficient      #redux state selector.
+glamor                  #css in your javascript.
+redux-thunk             #Thunk middleware for Redux.
+prop-types              #Check the passed props to the react components.
+immutability-helper     #Help library with the immutability of the reducer.
+pg                      # Library to manage the postgreSQL database
+socket.io               #Socket to interact in real time with the players.
+########################################################
 
-### `npm start`
+#Get start to coding
+git clone ''
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+cd game-of-drones
+npm install
+npm run dev
+########################################################
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+#Structure Folder
+The methodology called "Structure By Features" is used for the organization of folders in projects to be scalable and maintainable.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+├── src               # Main code.
+│ ├── common          # Reusable code.
+│ ├── components      # Reusable reagent components.
+├── pages             # Each module of the application. It is commonly defined by the react / router address.
+│ ├── game            # Main page. It is defined by the url for example "http://mysite.com/game".
+│ ├── actions         # Reducx actions. List of the different actions that may occur in the application.
+│ ├── index.js        # Entry point to expose all actions.
+│ ├── api             # Actions that call some service api.
+│ ├── index.js        # Entry point to expose all the actions api.
+│ ├── components      # Components of the module.
+│ ├── index.js        # Entry point to expose all the components.
+│ ├── actionTypes.js  # Constants that identify the actions to be performed.
+│ ├── constants.js    # General constants of the module.
+│ ├── Container.js    # Intelligent component that interacts with redux.
+│ ├── index.js        # Entry point to expose the content of the page (actions, reduce, Container, etc).
+│ ├── reducer.js      # Reducer de redux. The state is altered here depending on the actions.
+│ ├── selectors.js    # Getters for the state of redux.
+│ ├── configureStore  # Configuration of the redux store.
+│ ├── index.js        # Entry point for the application.
+###########################################################

@@ -5,7 +5,6 @@ import { css } from 'glamor';
 import Mode from './Mode';
 import Score from './Score';
 
-
 const Board = ({
     mode,
     answerPlayer,
@@ -26,7 +25,7 @@ const Board = ({
                 mode={mode}
                 changeMode={changeMode}
                 hideButton={!canPlayOnline}
-                infoText={canPlayOnline == false ? "En esta primera version solo es posible conectar a dos jugadores a la vez, puede intentar ganarle a la máquina mientras se libera una conexión. Gracias" : ""}
+                infoText={canPlayOnline == false ? "At the moment you can't play it looks like two people are playing right now, can you wait for a while? :C" : ""}
             />
             {
                 mode == MODE_PLAYER_PLAYER

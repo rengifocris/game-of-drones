@@ -1,9 +1,13 @@
-import { NAME, MODE_PLAYER_COMPUTER } from './constants';
+import { NAME, NAMELOGIN, MODE_PLAYER_COMPUTER } from './constants';
 import { createSelector } from 'reselect';
 import { MODE_PLAYER_PLAYER } from './constants';
 
 export const getModel = (state) => {
     return state[NAME];
+};
+
+export const getloginModel = (state) => {
+    return state[NAMELOGIN];
 };
 
 export const getMode = createSelector(
@@ -64,6 +68,11 @@ export const getWinner = createSelector(
 export const getSocketId = createSelector(
     getModel,
     (model) => model.socketId
+);
+
+export const getLogin = createSelector(
+    getloginModel,
+    (model) => model.nickname
 );
 
 export const getPlayersOnline = createSelector(

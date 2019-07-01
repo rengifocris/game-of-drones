@@ -4,6 +4,14 @@ import { MODE_PLAYER_COMPUTER } from '../constants';
 import { css } from 'glamor';
 
 const Mode = ({ changeMode, mode, hideButton, infoText }) => {
+
+    /*if (scorePlayer >= 3) {
+        alert(playerNumber + 'is the winner :D');
+            
+    } else if (scorePlayerTwo >= 3) {
+        alert(playerNumber + 'is the winner :D');
+    } */
+
     return (
         <div className={`row ${styles.container}`}>
             <div className="col text-center">
@@ -11,7 +19,7 @@ const Mode = ({ changeMode, mode, hideButton, infoText }) => {
                     {mode === MODE_PLAYER_COMPUTER ? 'PLAYER VS COMPUTER' : 'PLAYER VS PLAYER'}
                 </div>
                 {
-                    hideButton ? '' : <button className={styles.button} onClick={changeMode}>CHANGE MODE</button>
+                    hideButton ? '' : <button className={styles.button} onClick={changeMode}>PLAY WITH SOMEONE!</button>
                 }
                 {infoText}
             </div>

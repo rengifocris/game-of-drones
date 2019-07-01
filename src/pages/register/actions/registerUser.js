@@ -42,21 +42,21 @@ function validateFields(values, state){
     })
 
     if(!values.nickname){
-        errors.nickname = 'El nickname es requerido.';
+        errors.nickname = 'The nickname is required.';
     }else if(existUser){
-        errors.nickname = `El usuario ${values.nickname} ha sido registrado anteriormente.`
+        errors.nickname = `The user ${values.nickname} already exist.`
     }
 
     if(!values.password){
-        errors.password = 'La contraseña es requerida.';
+        errors.password = 'The Password is required.';
     }
 
     if(!values.confirmPassword){
-        errors.confirmPassword = 'Por favor escriba la confirmación de la contraseña.'
+        errors.confirmPassword = ' Please type again your password :(.'
     }
 
     if(values.password !== values.confirmPassword){
-        errors.confirmPassword = 'La contraseña y la confirmación de la contraseña deben ser iguales.'
+        errors.confirmPassword = 'Your password and its confirmation must be the same.'
     }
 
     return errors;

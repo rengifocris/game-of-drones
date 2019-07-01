@@ -13,11 +13,11 @@ const INITIAL_STATE = {
     answerPlayer: null, // Respuesta del jugador 1
     answerPlayerTwo: null, // Respuesta del jugador 2
     answerComputer: null, // Respeusta de la computadora
-    winner: null, // Ganador
+    winner: null, // Wiinner
     scorePlayer: 0, // Puntaje del player 1
     scorePlayerTwo: 0, // Puntaje del player 2
     scoreComputer: 0, // Puntaje de la computadora
-    playersOnline: 0, // Número de jugadores online
+    playersOnline: 0, // Number of players
 };
 
 export default function (state = INITIAL_STATE, action) {

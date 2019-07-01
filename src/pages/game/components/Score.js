@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { css } from 'glamor';
 import Weapon from './Weapon';
 
-const Score = ({ participant, points, type, hide, isWinner }) => {
+const Score = ({ participant,  points, type, hide, isWinner }) => {
     return (
         <div className={`row align-items-center ${styles.container}`}>
             <div className="col text-center">

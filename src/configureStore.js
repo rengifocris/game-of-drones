@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 /** Socket */
 import createSocketIoMiddleware from 'redux-socket.io';
 import io from 'socket.io-client';
-let socket = io('http://localhost:8000');
+let socket = io('http://'+ window.location.hostname+':8000');
 let socketIoMiddleware = createSocketIoMiddleware(socket, "server/");
 
 export const history = createHistory();

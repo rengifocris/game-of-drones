@@ -1,4 +1,5 @@
 export const NAME = 'game';
+export const NAMELOGIN = 'login';
 export const HAND_SCISSORS = 'scissors';
 export const HAND_ROCK = 'rock';
 export const HAND_PAPER = 'paper';

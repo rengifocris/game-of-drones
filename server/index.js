@@ -1,52 +1,58 @@
 const express = require('express');
 const socketio = require('socket.io');
 const http = require('http');
+
+
+const usersConnectionController = require('./controller/usersConnectionController');
+const gameController = require('./controller/gameController');
+const {SERVER_CONNECT_PLAYER,
+      SERVER_DISCONNECT_PLAYER,
+      UPDATE_PLAYERS_ONLINE,
+      SERVER_FIRE_WEAPON_REMOTE,
+      SEND_WINNER} = require('./utils/constans')
+
+
 const port = process.env.PORT || 8000;
 
-// Levantando servidor express.
+// starts express server.
 const app = express();
+
+// Handles Access-Control-Allow-Origin
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Header", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  if (req.method === 'OPTIONS') {
+      res.header('Access-Access-Control-Allow-Methods', '*');
+      return res.status(200).json({});
+  }
+  next();
+});
+
 const server = http.Server(app);
 const io = socketio(server);
 server.listen(port, () => console.log(`server started at port ${port}`));
 console.log('=========');
 
-// Tabla comparativa para saber quien fue el ganador.
-const winTable = {
-  'rock': { 'rock': 0, 'paper': -1, 'scissors': 1 },
-  'paper': { 'rock': 1, 'paper': 0, 'scissors': -1 },
-  'scissors': { 'rock': -1, 'paper': 1, 'scissors': 0 }
-};
-
 // Variable que indica el total de usuarios conectados.
 let totalUsersConnected = 0;
 
 // Jugadores que le han dado click al botón "Cambiar Modo" para jugar online.
-let players = [];
+global.players = [];
 
-// Los dos primeros jugadores.
-let availablesPlayers = {
+//the players in the game.
+global.availablesPlayers = {
   playerOne: true,
   playerTwo: true
 };
 
-// Disparo del primer jugador.
+// Weapon from the firt player.
 let weaponPlayerOne = null;
 
-// Disparo del segundo jugador.
+// Weapon from the second player.
 let weaponPlayerTwo = null
 
 // Elemento de conexión.
 let element = null;
-
-//Acciones reconocidas por redux.
-const SERVER_CONNECT_PLAYER = `server/game/SERVER_CONNECT_PLAYER`;
-const SERVER_DISCONNECT_PLAYER = `server/game/SERVER_DISCONNECT_PLAYER`;
-const CONNECT_PLAYER_SUCCESS = `game/CONNECT_PLAYER_SUCCESS`;
-const UPDATE_PLAYERS_ONLINE = `game/UPDATE_PLAYERS_ONLINE`;
-const SERVER_FIRE_WEAPON_REMOTE = 'server/game/SERVER_FIRE_WEAPON_REMOTE';
-const FIRE_WEAPON_REMOTE_SUCCESS = 'game/FIRE_WEAPON_REMOTE_SUCCESS';
-const SEND_WINNER = 'game/SEND_WINNER';
-const RESET_ANSWERS = 'game/RESET_ANSWERS';
 
 io.on('connection', function (socket) {
 
@@ -61,80 +67,45 @@ io.on('connection', function (socket) {
   socket.on('action', (action) => {
 
     switch (action.type) {
-      case SERVER_CONNECT_PLAYER: // Cuando se conecta un jugador "Cambia el modo a 'player vs player' en el lado del cliente."
-
-        let availablePlayer = getAvailablePlayer();
-        element = findElementBySocketId(socket.id);
-
-        if (!element) {
-          players.push({
-            socketId: socket.id,
-            playerNumber: availablePlayer
-          });
-        }
-
-        socket.emit('action', {
-          type: CONNECT_PLAYER_SUCCESS,
-          payload: {
-            socketId: socket.id,
-            playerNumber: availablePlayer,
-          }
-        });
-
+      case SERVER_CONNECT_PLAYER: 
+      // Make the connection player vs player into the client 
+        let resultConnection = usersConnectionController.connectPlayer(players, socket, availablesPlayers);
+        availablesPlayers = resultConnection.availablesPlayers;
         io.emit('action', {
           type: UPDATE_PLAYERS_ONLINE,
-          payload: players.length
+          payload: resultConnection.players.length
         });
-
         break;
       
-      case SERVER_DISCONNECT_PLAYER: // Se desconecta un jugador "Cambia el modo a 'player vs computer' en el lado del cliente."
-
-        removeSocketId(action.payload.socketId);
-        setAvailablePlayer(action.payload.playerNumber);
-
+      case SERVER_DISCONNECT_PLAYER: 
+      // if a player is disconnected stops the game
+        let resultDisConnection = usersConnectionController.disconnectPlayer(action, players, availablesPlayers);
+        availablesPlayers = resultDisConnection.availablesPlayers;
         io.emit('action', {
           type: UPDATE_PLAYERS_ONLINE,
-          payload: players.length
+          payload: resultDisConnection.players.length
         });
-
         break;
 
-      case SERVER_FIRE_WEAPON_REMOTE: // Alguien ha hecho un disparo (Pieda papel o tijera).
-
-        if (!weaponPlayerOne && !weaponPlayerTwo) {
-          socket.broadcast.emit('action', {
-            type: RESET_ANSWERS
-          });
+      case SERVER_FIRE_WEAPON_REMOTE: 
+      // Someone makes a movement.
+      
+      let resultFareWeapon = gameController.fareWeapon(weaponPlayerOne, weaponPlayerTwo, socket, action, players);
+        if (resultFareWeapon.weaponPlayerOne) {
+          weaponPlayerOne = resultFareWeapon.weaponPlayerOne;
         }
-
-        element = findElementBySocketId(socket.id);
-
-        if (element.playerNumber == 0) {
-          weaponPlayerOne = action.payload;
-        } else {
-          weaponPlayerTwo = action.payload;
+        if (resultFareWeapon.weaponPlayerTwo) {
+          weaponPlayerTwo = resultFareWeapon.weaponPlayerTwo;
         }
-
-        socket.broadcast.emit('action', {
-          type: FIRE_WEAPON_REMOTE_SUCCESS,
-          payload: {
-            playerNumber: element.playerNumber,
-            move: action.payload
-          }
-        });
-
-        if (weaponPlayerOne && weaponPlayerTwo) {
+        if (resultFareWeapon.weaponPlayerOne && resultFareWeapon.weaponPlayerTwo) {
+            console.log(action.user);
           io.emit('action', {
             type: SEND_WINNER,
-            payload: getWinner()
+            payload: gameController.getWinner(resultFareWeapon.weaponPlayerOne, resultFareWeapon.weaponPlayerTwo)
           });
-
           weaponPlayerOne = null;
           weaponPlayerTwo = null;
-
         }
-
         break;
 
       default:
@@ -145,7 +116,7 @@ io.on('connection', function (socket) {
 
   });
 
-  // Evento cuando se desconecta la conexion.
+  //exent when a disconect happens.
   socket.on('disconnect', function () {
 
     totalUsersConnected--;
@@ -171,24 +142,6 @@ function setAvailablePlayer(numberPlayer) {
   }
 }
 
-// Obtener que jugador se escuentra disponible 1 o 2 en caso de no haber devuelve -1;
-function getAvailablePlayer() {
-  if (availablesPlayers.playerOne) {
-    availablesPlayers.playerOne = false;
-    return 0;
-  } else if (availablesPlayers.playerTwo) {
-    availablesPlayers.playerTwo = false;
-    return 1;
-  }
-  return -1;
-}
-
-// Encuentra la conexion por el socketId del arreglo de jugadores disponibles.
-function findElementBySocketId(socketId) {
-  return players.find((element) => {
-    return element.socketId == socketId;
-  });
-}
 
 // Elimina la conexion por socketId del arreglo de jugadores disponibles.
 function removeSocketId(socketId) {
@@ -198,12 +151,4 @@ function removeSocketId(socketId) {
     }
     return player.socketId !== socketId;
   });
-}
-
-// Dependiendo de los disparos de cada jugador se define quien fue el ganador.
-function getWinner() {
-  return winTable[weaponPlayerOne][weaponPlayerTwo] === 0
-    ? 'tie'
-    : winTable[weaponPlayerOne][weaponPlayerTwo] === 1
-      ? 'playerOne' : 'playerTwo';
 }

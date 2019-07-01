@@ -10,6 +10,9 @@ import api from './api';
 import * as selectors from './selectors';
 import login from '../login';
 
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+
 class Container extends Component {
 
     componentDidMount(){
@@ -41,6 +44,64 @@ class Container extends Component {
             logout
         } = this.props;
 
+    if (scorePlayer >= 3) {
+
+        const options = {
+            title: 'We have a winner :D',
+            message: 'Natalia is the winnwer, Do you want to play revenge for your honor and pride?',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => {
+                    changeMode()
+                    changeMode()
+                }
+              },
+              {
+                label: 'No',
+                onClick: () => changeMode()
+              }
+            ],
+            childrenElement: () => <div />,
+         ///   customUI: ({ onClose }) => <div>Custom UI</div>,
+            closeOnEscape: false,
+            closeOnClickOutside: false,
+            willUnmount: () => {},
+            onClickOutside: () => {},
+            onKeypressEscape: () => {}
+        };
+
+        confirmAlert(options);
+
+    } else if (scorePlayerTwo >= 3) {
+        const options = {
+            title: 'We have a winner :D',
+            message: 'Natalia is the winnwer, Do you want to play revenge for your honor and pride?',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => {
+                    changeMode()
+                    changeMode()
+                }
+              },
+              {
+                label: 'No',
+                onClick: () => changeMode()
+              }
+            ],
+            childrenElement: () => <div />,
+         ///   customUI: ({ onClose }) => <div>Custom UI</div>,
+            closeOnEscape: false,
+            closeOnClickOutside: false,
+            willUnmount: () => {},
+            onClickOutside: () => {},
+            onKeypressEscape: () => {}
+        };
+
+       confirmAlert(options);
+
+    }
         return (
 
             <div className="row h-100">
