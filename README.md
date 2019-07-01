@@ -50,3 +50,5 @@ The methodology called "Structure By Features" is used for the organization of f
 │ ├── configureStore  # Configuration of the redux store.
 │ ├── index.js        # Entry point for the application.
 ###########################################################
+
+
