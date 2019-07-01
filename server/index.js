@@ -11,11 +11,18 @@ const {SERVER_CONNECT_PLAYER,
       SERVER_FIRE_WEAPON_REMOTE,
       SEND_WINNER} = require('./utils/constans')
 
+// starts express server.
+const app = express();
 
 const port = process.env.PORT || 8000;
 
-// starts express server.
-const app = express();
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res, next) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+  })
+}
 
 // Handles Access-Control-Allow-Origin
 app.use((req, res, next) => {
@@ -89,7 +96,7 @@ io.on('connection', function (socket) {
 
       case SERVER_FIRE_WEAPON_REMOTE: 
       // Someone makes a movement.
-      
+
       let resultFareWeapon = gameController.fareWeapon(weaponPlayerOne, weaponPlayerTwo, socket, action, players);
         if (resultFareWeapon.weaponPlayerOne) {
           weaponPlayerOne = resultFareWeapon.weaponPlayerOne;
