@@ -1,7 +1,7 @@
 const express = require('express');
 const socketio = require('socket.io');
 const http = require('http');
-
+const path = require('path');
 
 const usersConnectionController = require('./controller/usersConnectionController');
 const gameController = require('./controller/gameController');
