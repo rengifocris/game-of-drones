@@ -19,7 +19,7 @@ const Mode = ({ changeMode, mode, hideButton, infoText }) => {
                     {mode === MODE_PLAYER_COMPUTER ? 'PLAYER VS COMPUTER' : 'PLAYER VS PLAYER'}
                 </div>
                 {
-                    hideButton ? '' : <button className={styles.button} onClick={changeMode}>PLAY WITH SOMEONE!</button>
+                    hideButton ? '' : <button className={styles.button} onClick={changeMode}> PLAY WITH THE MACHINE / PLAY WITH SOMEONE!</button>
                 }
                 {infoText}
             </div>

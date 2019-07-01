@@ -3,12 +3,13 @@ import { routerMiddleware } from 'connected-react-router';
 import createRootReducer from './pages/main/reducer';
 import createHistory from "history/createBrowserHistory";
 import thunk from 'redux-thunk';
+import {URL} from './constans';
 
 /** Socket */
 import createSocketIoMiddleware from 'redux-socket.io';
 import io from 'socket.io-client';
-console.log('https://'+ window.location.hostname);
-let socket = io('https://'+ window.location.hostname);
+
+let socket = io(URL == 'http://localhost:8000' ? 'http://' + window.location.hostname + ':' + '8000' : URL);
 let socketIoMiddleware = createSocketIoMiddleware(socket, "server/");
 
 export const history = createHistory();

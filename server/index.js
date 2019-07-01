@@ -45,7 +45,8 @@ let totalUsersConnected = 0;
 
 // Jugadores que le han dado click al botón "Cambiar Modo" para jugar online.
 global.players = [];
-
+global.playeroneId = null;
+global.playertwoId = null;
 //the players in the game.
 global.availablesPlayers = {
   playerOne: true,
@@ -76,7 +77,7 @@ io.on('connection', function (socket) {
     switch (action.type) {
       case SERVER_CONNECT_PLAYER: 
       // Make the connection player vs player into the client 
-        let resultConnection = usersConnectionController.connectPlayer(players, socket, availablesPlayers);
+        let resultConnection = usersConnectionController.connectPlayer(players, socket, availablesPlayers, action);
         availablesPlayers = resultConnection.availablesPlayers;
         io.emit('action', {
           type: UPDATE_PLAYERS_ONLINE,
@@ -96,19 +97,21 @@ io.on('connection', function (socket) {
 
       case SERVER_FIRE_WEAPON_REMOTE: 
       // Someone makes a movement.
-
       let resultFareWeapon = gameController.fareWeapon(weaponPlayerOne, weaponPlayerTwo, socket, action, players);
         if (resultFareWeapon.weaponPlayerOne) {
+          global.playeroneId = action.user;
           weaponPlayerOne = resultFareWeapon.weaponPlayerOne;
         }
         if (resultFareWeapon.weaponPlayerTwo) {
+          global.playertwoId = action.user;
           weaponPlayerTwo = resultFareWeapon.weaponPlayerTwo;
         }
         if (resultFareWeapon.weaponPlayerOne && resultFareWeapon.weaponPlayerTwo) {
-            console.log(action.user);
+          let winner = gameController.getWinner(resultFareWeapon.weaponPlayerOne, resultFareWeapon.weaponPlayerTwo, action, socket)
           io.emit('action', {
             type: SEND_WINNER,
-            payload: gameController.getWinner(resultFareWeapon.weaponPlayerOne, resultFareWeapon.weaponPlayerTwo)
+            payload: winner,
+            user:  winner == 'playerOne' ? global.playeroneId : winner == 'playerTwo' ? global.playertwoId: '',
           });
           weaponPlayerOne = null;
           weaponPlayerTwo = null;

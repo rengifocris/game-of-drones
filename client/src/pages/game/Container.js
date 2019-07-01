@@ -38,6 +38,7 @@ class Container extends Component {
             playerNumber,
             answerPlayerTwo,
             scorePlayerTwo,
+            playerName,
             winner,
             canPlayOnline,
             playersOnline,
@@ -46,9 +47,10 @@ class Container extends Component {
 
     if (scorePlayer >= 3) {
 
+        let playerwon = playerNumber == 0? 'You are ': playerNumber == 1 ? 'Your Rival is ':'';
         const options = {
             title: 'We have a winner :D',
-            message: 'Natalia is the winnwer, Do you want to play revenge for your honor and pride?',
+            message: playerwon + 'the winnwer, Do you want to play revenge for your honor and pride?',
             buttons: [
               {
                 label: 'Yes',
@@ -63,7 +65,6 @@ class Container extends Component {
               }
             ],
             childrenElement: () => <div />,
-         ///   customUI: ({ onClose }) => <div>Custom UI</div>,
             closeOnEscape: false,
             closeOnClickOutside: false,
             willUnmount: () => {},
@@ -74,9 +75,10 @@ class Container extends Component {
         confirmAlert(options);
 
     } else if (scorePlayerTwo >= 3) {
+        let playerwon = playerNumber == 1? 'You are ': playerNumber == 0 ? 'Your Rival is ':'';
         const options = {
             title: 'We have a winner :D',
-            message: 'Natalia is the winnwer, Do you want to play revenge for your honor and pride?',
+            message:  playerwon + 'the winnwer, Do you want to play revenge for your honor and pride?',
             buttons: [
               {
                 label: 'Yes',
@@ -173,52 +175,38 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 Container.propTypes = {
-    /** Modo plaver vs player ó plaver vs computer. */
     mode: PropTypes.number,
 
-    /** Respuesta del jugador 1. */
     answerPlayer: PropTypes.string,
 
-    /** Respuesta de la computadora. */
     answerComputer: PropTypes.string,
 
-    /** Puntaje del jugador 1. */
     scorePlayer: PropTypes.number,
 
-    /** Puntaje de la computadora. */
     scoreComputer: PropTypes.number,
 
-    /** Disparo */
     fireWeapon: PropTypes.string,
 
-    /** Disparo del jugador remoto */
     fireWeaponRemote: PropTypes.string,
 
-    /** Bandera para indicar esperando respuesta. */
     waitingResponse: PropTypes.bool,
 
-    /** Función para cambiar el modo. */
     changeMode: PropTypes.func,
 
-    /** Bandera para saber si el jugador es remoto. */
     isRemote: PropTypes.bool,
 
-    /** Jugador */
     playerNumber: PropTypes.number,
 
-    /** Respuesta del Jugador 2 */
     answerPlayerTwo: PropTypes.string,
 
-    /** Puntaje del jugador 2 */
     scorePlayerTwo: PropTypes.number,
 
-    /** Ganador */
     winner: PropTypes.string,
 
-    /** Bandera para saber si puede jugar online. */
+    playerName: PropTypes.string,
+
     canPlayOnline: PropTypes.bool,
 
-    /** Numero de jugadores en linea. */
     playersOnline: PropTypes.number
 };
 

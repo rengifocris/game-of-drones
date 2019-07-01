@@ -1,7 +1,7 @@
 const {CONNECT_PLAYER_SUCCESS} = require('../utils/constans')
-
+const game =  require('../model/game');
 // connect the player
- const connectPlayer = (players, socket, availablesPlayers) => {
+ const connectPlayer = (players, socket, availablesPlayers, action) => {
 
     let {availablePlayer, availablesPlayersToConnect} = getAvailablePlayer(availablesPlayers);
     element = findElementBySocketId(socket.id, players);
@@ -21,6 +21,14 @@ const {CONNECT_PLAYER_SUCCESS} = require('../utils/constans')
         playerNumber: availablePlayer,
       }
     });
+
+    if (availablePlayer == 0) {
+        global.playeroneId = socket.id;
+        // game.saveGameResults(action, socket);
+    }
+    else {
+        global.playertwoId = socket.id;
+    }
 
     return ({
         socket: socket,

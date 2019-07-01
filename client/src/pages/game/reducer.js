@@ -7,16 +7,17 @@ import {
 import update from 'immutability-helper';
 
 const INITIAL_STATE = {
-    socketId: null, // Identificador del socket.
-    mode: MODE_PLAYER_COMPUTER, // Modo
-    playerNumber: null, // Numero del jugador
-    answerPlayer: null, // Respuesta del jugador 1
-    answerPlayerTwo: null, // Respuesta del jugador 2
-    answerComputer: null, // Respeusta de la computadora
+    socketId: null, // indentity  socket.
+    mode: MODE_PLAYER_COMPUTER, // Mode
+    playerNumber: null, // Number of the player
+    answerPlayer: null, // Response from PJ 1
+    answerPlayerTwo: null, // playername
+    answerComputer: null, // Response from PC 1
     winner: null, // Wiinner
-    scorePlayer: 0, // Puntaje del player 1
-    scorePlayerTwo: 0, // Puntaje del player 2
-    scoreComputer: 0, // Puntaje de la computadora
+    playerName: null, // player name
+    scorePlayer: 0, // Score pj 1
+    scorePlayerTwo: 0, // Score pj 2
+    scoreComputer: 0, // Score from PC
     playersOnline: 0, // Number of players
 };
 
@@ -77,7 +78,8 @@ export default function (state = INITIAL_STATE, action) {
             if (state.playerNumber == 0 || state.playerNumber == 1) {
                 return update(state, {
                     answerPlayer: { $apply: (value) => state.playerNumber == 0 ? action.payload : value },
-                    answerPlayerTwo: { $apply: (value) => state.playerNumber == 1 ? action.payload : value }
+                    answerPlayerTwo: { $apply: (value) => state.playerNumber == 1 ? action.payload : value },
+                    playerName: { $set: action.user }
                 });
             }
 
@@ -88,7 +90,8 @@ export default function (state = INITIAL_STATE, action) {
 
                 return update(state, {
                     answerPlayer: { $apply: (value) => action.payload.playerNumber == 0 ? action.payload.move : value },
-                    answerPlayerTwo: { $apply: (value) => action.payload.playerNumber == 1 ? action.payload.move : value }
+                    answerPlayerTwo: { $apply: (value) => action.payload.playerNumber == 1 ? action.payload.move : value },
+                    playerName: { $set: action.user }
                 });
             }
 
@@ -98,7 +101,8 @@ export default function (state = INITIAL_STATE, action) {
             return update(state, {
                 winner: { $set: action.payload },
                 scorePlayer: { $apply: (value) => action.payload == 'playerOne' ? value + 1 : value },
-                scorePlayerTwo: { $apply: (value) => action.payload == 'playerTwo' ? value + 1 : value }
+                scorePlayerTwo: { $apply: (value) => action.payload == 'playerTwo' ? value + 1 : value },
+                playerName: { $set: action.user }
             });
 
         default:
